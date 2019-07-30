@@ -2160,52 +2160,129 @@ class App extends mixin(EventEmitter, Component) {
       return
     }
 
-    let toBlockVec = new THREE.Vector3(posX, this.autoPilotYPos, posZ).sub(new THREE.Vector3(
-      this.blockPositions[(this.closestBlock.blockData.height) * 2 + 0],
-      this.autoPilotYPos,
-      this.blockPositions[(this.closestBlock.blockData.height) * 2 + 1]
-    )).normalize().multiplyScalar(500)
-
-    let to = new THREE.Vector3(
-      this.blockPositions[(this.closestBlock.blockData.height) * 2 + 0],
-      this.autoPilotYPos,
-      this.blockPositions[(this.closestBlock.blockData.height) * 2 + 1]
-    ).add(toBlockVec)
-    let toTarget = new THREE.Vector3(posX, this.autoPilotYPos + 20, posZ)
-
-    if (Math.random() > 0.75) {
-      toTarget = new THREE.Vector3(0, 0, 0)
-    }
-
+    let underneath = false
     if (Math.random() > 0.63) {
-      to.y = -50
-      toTarget.y = -50
+      underneath = true
     }
 
-    this.prepareCamAnim(to, toTarget)
+    if (underneath) {
+      let toBlockVec1 = new THREE.Vector3(posX, this.autoPilotYPos, posZ).sub(new THREE.Vector3(
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 0],
+        this.autoPilotYPos,
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 1]
+      )).normalize().multiplyScalar(200)
 
-    let that = this
-    let camPos = { x: this.camera.position.x, y: this.camera.position.y, z: this.camera.position.z }
+      let toBlockVec2 = new THREE.Vector3(posX, this.autoPilotYPos, posZ).sub(new THREE.Vector3(
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 0],
+        this.autoPilotYPos,
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 1]
+      )).normalize().multiplyScalar(500)
 
-    this.autoPilotTween = new TWEEN.Tween(camPos)
-      .to(to, 20000)
-      .onUpdate(function () {
-        if (!that.autoPilot) {
-          return
-        }
+      let to1 = new THREE.Vector3(
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 0],
+        this.autoPilotYPos,
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 1]
+      ).add(toBlockVec1)
 
-        that.camera.position.set(camPos.x, camPos.y, camPos.z)
-      })
-      .onComplete(() => {
-        setTimeout(() => {
-          if (this.autoPilot) {
-            this.autoPilotAnimLoop()
+      let to2 = new THREE.Vector3(
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 0],
+        this.autoPilotYPos,
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 1]
+      ).add(toBlockVec2)
+
+      if (this.prevPosUnderneath === true) {
+        to1.y = -50
+      }
+      to2.y = -50
+
+      let toTarget = new THREE.Vector3(posX, -50, posZ)
+
+      // face center of scene?
+      if (Math.random() > 0.75) {
+        toTarget = new THREE.Vector3(0, 0, 0)
+      }
+
+      this.prepareCamAnim(to2, toTarget)
+
+      let that = this
+      let camPos = { x: this.camera.position.x, y: this.camera.position.y, z: this.camera.position.z }
+
+      this.autoPilotTween = new TWEEN.Tween(camPos)
+        .to(to1, 10000)
+        .onUpdate(function () {
+          if (!that.autoPilot) {
+            return
           }
-        }, 10)
-      })
-      .start()
 
-    this.animateCamRotation(5000)
+          that.camera.position.set(camPos.x, camPos.y, camPos.z)
+        })
+        .onComplete(() => {
+          that.autoPilotTween = new TWEEN.Tween(camPos)
+            .to(to2, 10000)
+            .onUpdate(function () {
+              if (!that.autoPilot) {
+                return
+              }
+
+              that.camera.position.set(camPos.x, camPos.y, camPos.z)
+            })
+            .onComplete(() => {
+              setTimeout(() => {
+                if (this.autoPilot) {
+                  this.autoPilotAnimLoop()
+                }
+              }, 10)
+            })
+            .start()
+        })
+        .start()
+
+      this.animateCamRotation(10000)
+    } else {
+      let toBlockVec = new THREE.Vector3(posX, this.autoPilotYPos, posZ).sub(new THREE.Vector3(
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 0],
+        this.autoPilotYPos,
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 1]
+      )).normalize().multiplyScalar(500)
+
+      let to = new THREE.Vector3(
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 0],
+        this.autoPilotYPos,
+        this.blockPositions[(this.closestBlock.blockData.height) * 2 + 1]
+      ).add(toBlockVec)
+      let toTarget = new THREE.Vector3(posX, this.autoPilotYPos + 20, posZ)
+
+      // face center of scene?
+      if (Math.random() > 0.75) {
+        toTarget = new THREE.Vector3(0, 0, 0)
+      }
+
+      this.prepareCamAnim(to, toTarget)
+
+      let that = this
+      let camPos = { x: this.camera.position.x, y: this.camera.position.y, z: this.camera.position.z }
+
+      this.autoPilotTween = new TWEEN.Tween(camPos)
+        .to(to, 20000)
+        .onUpdate(function () {
+          if (!that.autoPilot) {
+            return
+          }
+
+          that.camera.position.set(camPos.x, camPos.y, camPos.z)
+        })
+        .onComplete(() => {
+          setTimeout(() => {
+            if (this.autoPilot) {
+              this.autoPilotAnimLoop()
+            }
+          }, 10)
+        })
+        .start()
+      this.animateCamRotation(5000)
+    }
+
+    this.prevPosUnderneath = underneath
   }
 
   autoPilotAnimLoopVR () {
