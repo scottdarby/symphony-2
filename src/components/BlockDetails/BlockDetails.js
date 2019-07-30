@@ -330,11 +330,11 @@ export default class BlockDetails extends Component {
             </div>
           </div>
 
-          <div className='info-panel'>
-            <div className='info-panel-inner'>
+          <div className='info-panel lower-info'>
+            {/* <div className='info-panel-inner'>
               <div className='info-panel-border' />
               {this.infoPanelContent()}
-            </div>
+            </div> */}
 
             {this.audioMuteControls()}
 

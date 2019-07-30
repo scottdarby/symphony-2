@@ -516,7 +516,7 @@ canvas#sketchboard {
 .block-hash {
   position: absolute;
   bottom: 43px;
-  left: 122px;
+  left: 47px;
 }
 
 .block-details-border,
@@ -544,7 +544,7 @@ canvas#sketchboard {
   pointer-events: auto;
   position: absolute;
   right: 20px;
-  top: 106px;
+  top: 175px;
   width: 222px;
   z-index: 9;
   background: rgba(0, 0, 0, 0.25);
@@ -556,8 +556,13 @@ canvas#sketchboard {
 }
 
 .info-panel {
-  top: 390px;
+  top: 435px;
 }
+.info-panel.lower-info {
+  background: transparent;
+}
+
+
 
 @media only screen and (max-width: 600px) {
   .block-details {
