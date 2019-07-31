@@ -111,6 +111,7 @@ class App extends mixin(EventEmitter, Component) {
     this.textureLoader = new THREE.TextureLoader()
     this.maxHeight = null
     this.isNavigating = false
+    this.camEuler = new THREE.Euler(0, 0, 0, 'YXZ')
 
     this.audioEnabled = true
     if (this.config.detector.isMobile) {
@@ -455,6 +456,9 @@ class App extends mixin(EventEmitter, Component) {
 
     this.mousePos.x = e.clientX
     this.mousePos.y = e.clientY
+
+    this.movementX = ((e.pageX) - this.width / 2) / this.width / 2
+    this.movementY = ((e.pageY) - this.height / 2) / this.height / 2
   }
 
   updatePicker () {
@@ -2202,7 +2206,7 @@ class App extends mixin(EventEmitter, Component) {
         toTarget = new THREE.Vector3(0, 0, 0)
       }
 
-      this.prepareCamAnim(to2, toTarget)
+      // this.prepareCamAnim(to2, toTarget)
 
       let that = this
       let camPos = { x: this.camera.position.x, y: this.camera.position.y, z: this.camera.position.z }
@@ -2237,7 +2241,7 @@ class App extends mixin(EventEmitter, Component) {
         })
         .start()
 
-      this.animateCamRotation(10000)
+      // this.animateCamRotation(10000)
     } else {
       let toBlockVec = new THREE.Vector3(posX, this.autoPilotYPos, posZ).sub(new THREE.Vector3(
         this.blockPositions[(this.closestBlock.blockData.height) * 2 + 0],
@@ -2257,7 +2261,7 @@ class App extends mixin(EventEmitter, Component) {
         toTarget = new THREE.Vector3(0, 0, 0)
       }
 
-      this.prepareCamAnim(to, toTarget)
+      // this.prepareCamAnim(to, toTarget)
 
       let that = this
       let camPos = { x: this.camera.position.x, y: this.camera.position.y, z: this.camera.position.z }
@@ -2279,10 +2283,28 @@ class App extends mixin(EventEmitter, Component) {
           }, 10)
         })
         .start()
-      this.animateCamRotation(5000)
+      // this.animateCamRotation(5000)
     }
 
     this.prevPosUnderneath = underneath
+  }
+
+  /**
+   * Move camera based on mouse position
+   */
+  cameraFollowTarget () {
+    if (typeof this.movementX === 'undefined') {
+      return
+    }
+
+    this.camEuler.setFromQuaternion(this.camera.quaternion)
+
+    this.camEuler.y -= this.movementX * 0.01
+    this.camEuler.x -= this.movementY * 0.01
+
+    this.camEuler.x = Math.max(-Math.PI * 0.25, Math.min(Math.PI * 0.25, this.camEuler.x))
+
+    this.camera.quaternion.setFromEuler(this.camEuler)
   }
 
   autoPilotAnimLoopVR () {
@@ -2403,6 +2425,8 @@ class App extends mixin(EventEmitter, Component) {
     this.updateCamPosUI()
     this.cameraSideViewInteraction()
     this.sceneRenderLogic()
+
+    this.cameraFollowTarget()
   }
 
   geoUpdateLoop (delta) {
@@ -3886,13 +3910,13 @@ class App extends mixin(EventEmitter, Component) {
 
     if (this.config.scene.mode === 'lite') {
       this.camera.position.x = this.blockPositions[this.maxHeight * 2 + 0]
-      this.camera.position.y = 20
+      this.camera.position.y = this.autoPilotYPos
       this.camera.position.z = this.blockPositions[this.maxHeight * 2 + 1]
 
       this.camera.lookAt(
         new THREE.Vector3(
           this.blockPositions[(this.maxHeight - 1) * 2 + 0],
-          20,
+          this.autoPilotYPos,
           this.blockPositions[(this.maxHeight - 1) * 2 + 1]
         )
       )
