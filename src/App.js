@@ -335,7 +335,7 @@ class App extends mixin(EventEmitter, Component) {
     await this.initPositions()
     this.initObjects()
     this.initGUI()
-    this.initScene()
+    await this.initScene()
     this.initCamera()
     this.initLights()
     this.initEnvironment()
@@ -3786,25 +3786,27 @@ class App extends mixin(EventEmitter, Component) {
     undersidePlane.visible = true
   }
 
-  initScene () {
-    this.group = new THREE.Group()
-    this.scene = new THREE.Scene()
-    this.scene.add(this.group)
-
-    this.scene.fog = new THREE.FogExp2(Config.scene.bgColor, Config.scene.fogDensity)
-
-    this.cubeMap = new THREE.CubeTextureLoader()
-      .setPath('assets/images/textures/cubemaps/space/')
-      .load([
-        'rt.png', // right
-        'lf.png', // left
-        'up.png', // top
-        'dn.png', // bottom
-        'ft.png', // front
-        'bk.png' // back
-      ])
-
-    this.scene.background = this.cubeMap
+  async initScene () {
+    return new Promise((resolve, reject) => {
+      this.group = new THREE.Group()
+      this.scene = new THREE.Scene()
+      this.scene.add(this.group)
+      this.scene.fog = new THREE.FogExp2(Config.scene.bgColor, Config.scene.fogDensity)
+      this.cubeMap = new THREE.CubeTextureLoader()
+        .setPath('assets/images/textures/cubemaps/space/')
+        .load([
+          'rt.png', // right
+          'lf.png', // left
+          'up.png', // top
+          'dn.png', // bottom
+          'ft.png', // front
+          'bk.png' // back
+        ],
+        () => {
+          this.scene.background = this.cubeMap
+          resolve()
+        })
+    })
   }
 
   onVRControllerSelect () {
