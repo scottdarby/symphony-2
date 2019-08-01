@@ -1712,7 +1712,7 @@ canvas#sketchboard {
 
 @keyframes opacity-pulse {
   0% {
-    opacity: 0.;
+    opacity: 0.8;
   }
   50% {
     opacity: 0.45;
