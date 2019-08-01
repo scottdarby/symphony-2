@@ -206,10 +206,6 @@ class App extends mixin(EventEmitter, Component) {
   }
 
   componentDidMount () {
-    this.setState({
-      loadProgress: 10
-    })
-
     if (this.config.scene.skipLaunchScreen) {
       this.setLoadingState()
       this.initStage('high')
@@ -337,41 +333,15 @@ class App extends mixin(EventEmitter, Component) {
     this.setLoadingState()
     this.setMobileStageOptions()
     this.initRenderer(quality)
-
     await this.initPositions()
-
-    this.setState({
-      loadProgress: 20
-    })
-
     this.initObjects()
     this.initGUI()
     await this.initScene()
-
-    this.setState({
-      loadProgress: 50
-    })
-
     this.initCamera()
     this.initLights()
     this.initEnvironment()
-
-    this.setState({
-      loadProgress: 60
-    })
-
     this.initGeometry()
-
-    this.setState({
-      loadProgress: 70
-    })
-
     this.addEvents()
-
-    this.setState({
-      loadProgress: 100
-    })
-
     this.renderer.setAnimationLoop(function () {
       this.renderFrame()
     }.bind(this))
@@ -4419,7 +4389,19 @@ class App extends mixin(EventEmitter, Component) {
     this.audioManager.unMuteMaster()
   }
 
+  loadingAnim () {
+    setTimeout(() => {
+      if (this.state.loadProgress < 100) {
+        this.setState({
+          loadProgress: this.state.loadProgress + 4
+        })
+        this.loadingAnim()
+      }
+    }, 200)
+  }
+
   setLoadingState () {
+    this.loadingAnim()
     this.setState({
       loading: true,
       qualitySelected: true
