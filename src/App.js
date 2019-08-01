@@ -191,7 +191,8 @@ class App extends mixin(EventEmitter, Component) {
       qualitySelected: false,
       showInfoOverlay: false,
       UIClass: 'symphony',
-      animatingCamera: true
+      animatingCamera: true,
+      loadProgress: 0
     }
 
     this.initFirebase()
@@ -205,6 +206,10 @@ class App extends mixin(EventEmitter, Component) {
   }
 
   componentDidMount () {
+    this.setState({
+      loadProgress: 10
+    })
+
     if (this.config.scene.skipLaunchScreen) {
       this.setLoadingState()
       this.initStage('high')
@@ -332,15 +337,40 @@ class App extends mixin(EventEmitter, Component) {
     this.setLoadingState()
     this.setMobileStageOptions()
     this.initRenderer(quality)
+
     await this.initPositions()
+
+    this.setState({
+      loadProgress: 20
+    })
+
     this.initObjects()
     this.initGUI()
     await this.initScene()
+
+    this.setState({
+      loadProgress: 50
+    })
+
     this.initCamera()
     this.initLights()
     this.initEnvironment()
+
+    this.setState({
+      loadProgress: 60
+    })
+
     this.initGeometry()
+
+    this.setState({
+      loadProgress: 70
+    })
+
     this.addEvents()
+
+    this.setState({
+      loadProgress: 100
+    })
 
     this.renderer.setAnimationLoop(function () {
       this.renderFrame()
@@ -4542,6 +4572,20 @@ class App extends mixin(EventEmitter, Component) {
     }
   }
 
+  UILogo () {
+    let logoPieces = []
+    let totalPieces = 30
+    let pieceLoadSize = 100 / 30
+    for (var i = 1; i <= totalPieces; i++) {
+      let className = 'logo-' + i
+      if (pieceLoadSize * i <= 100 - this.state.loadProgress) {
+        className += ' hidden'
+      }
+      logoPieces.push(<span className={className} key={i} />)
+    }
+    return logoPieces
+  }
+
   UILoadingScreen () {
     if (this.state.qualitySelected) {
       let className = 'loading-container'
@@ -4552,7 +4596,9 @@ class App extends mixin(EventEmitter, Component) {
       return (
         <div className={className}>
           <div className='logo-container'>
-            <img className='symphony-logo pulsate' src={logo} alt='Symphony Logo' />
+            <div className='loading-logo'>
+              {this.UILogo()}
+            </div>
             <h1>LOADING</h1>
           </div>
         </div>

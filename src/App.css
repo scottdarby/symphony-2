@@ -1412,6 +1412,187 @@ canvas#sketchboard {
   transition: opacity 10s, filter 10s;
 }
 
+.logo-container {
+  position: relative;
+}
+
+.loading-logo {
+  display: inline-flex;
+  align-items: center;
+  transform: matrix3d(1,0,0.00,0,0.00,1,0.02,0.0004,0,-0.02,1,0,0,0,0,1);
+}
+
+.loading-logo span {
+  background: #fff;
+  width: 5px;
+  height: 300px;
+  display: block;
+  position: absolute;
+  transform: scale(0) rotate(-145deg);
+  opacity: 0.6;
+  transition: transform 2s, opacity 2s;
+}
+
+.loading-logo span:hover {
+  filter: blur(0.2ex);
+}
+
+.loading-logo span.hidden {
+  transform: rotate(0deg) scale(0);
+  opacity: 0.0;
+}
+
+.loading-logo .logo-1 {
+  transform: rotate(18deg);
+  animation: opacity-pulse 1.0s ease-in-out infinite both;
+}
+
+.loading-logo .logo-2 {
+  transform: rotate(12deg) scale(0.95);
+  animation: opacity-pulse 1.1s ease-in-out infinite both;
+}
+
+.loading-logo .logo-3 {
+  transform: rotate(7deg) scale(0.9);
+  animation: opacity-pulse 1.2s ease-in-out infinite both;
+}
+
+.loading-logo .logo-4 {
+  transform: rotate(1deg) scale(0.85);
+  transition: transform 5s;
+  animation: opacity-pulse 1.3s ease-in-out infinite both;
+}
+
+.loading-logo .logo-5 {
+  transform: rotate(-4deg) scale(0.8);
+  animation: opacity-pulse 1.4s ease-in-out infinite both;
+}
+
+.loading-logo .logo-6 {
+  transform: rotate(-10deg) scale(0.75);
+  animation: opacity-pulse 1.5s ease-in-out infinite both;
+}
+
+.loading-logo .logo-7 {
+  transform: rotate(-16deg) scale(0.7);
+  animation: opacity-pulse 1.6s ease-in-out infinite both;
+}
+
+.loading-logo .logo-8 {
+  transform: rotate(-22deg) scale(0.65);
+  animation: opacity-pulse 1.7s ease-in-out infinite both;
+}
+
+.loading-logo .logo-9 {
+  transform: rotate(-28deg) scale(0.6);
+  animation: opacity-pulse 1.8s ease-in-out infinite both;
+}
+
+.loading-logo .logo-10 {
+  transform: rotate(-33deg) scale(0.55);
+  animation: opacity-pulse 1.9s ease-in-out infinite both;
+}
+
+.loading-logo .logo-11 {
+  transform: rotate(-39deg) scale(0.5);
+  animation: opacity-pulse 2.0s ease-in-out infinite both;
+}
+
+.loading-logo .logo-12 {
+  transform: rotate(-45deg) scale(0.45);
+  animation: opacity-pulse 2.1s ease-in-out infinite both;
+}
+
+.loading-logo .logo-13 {
+  transform: rotate(-52deg) scale(0.4);
+  animation: opacity-pulse 2.2s ease-in-out infinite both;
+}
+
+.loading-logo .logo-14 {
+  transform: rotate(-59deg) scale(0.35);
+  animation: opacity-pulse 2.3s ease-in-out infinite both;
+}
+
+.loading-logo .logo-15 {
+  transform: rotate(-65deg) scale(0.33);
+  animation: opacity-pulse 2.4s ease-in-out infinite both;
+}
+
+.loading-logo .logo-16 {
+  transform: rotate(-71.1deg) scale(0.33);
+  animation: opacity-pulse 2.5s ease-in-out infinite both;
+}
+
+.loading-logo .logo-17 {
+  transform: rotate(-78deg) scale(0.32);
+  animation: opacity-pulse 2.6s ease-in-out infinite both;
+}
+
+.loading-logo .logo-18 {
+  transform: rotate(-85deg) scale(0.30);
+  animation: opacity-pulse 2.7s ease-in-out infinite both;
+}
+
+.loading-logo .logo-19 {
+  transform: rotate(-90deg) scale(0.28);
+  animation: opacity-pulse 2.8s ease-in-out infinite both;
+}
+
+.loading-logo .logo-20 {
+  transform: rotate(-95deg) scale(0.25);
+  animation: opacity-pulse 2.9s ease-in-out infinite both;
+}
+
+.loading-logo .logo-21 {
+  transform: rotate(-100deg) scale(0.24);
+  animation: opacity-pulse 3.0s ease-in-out infinite both;
+}
+
+.loading-logo .logo-22 {
+  transform: rotate(-105deg) scale(0.23);
+  animation: opacity-pulse 3.1s ease-in-out infinite both;
+}
+
+.loading-logo .logo-23 {
+  transform: rotate(-110deg) scale(0.22);
+  animation: opacity-pulse 3.2s ease-in-out infinite both;
+}
+
+.loading-logo .logo-24 {
+  transform: rotate(-115deg) scale(0.21);
+  animation: opacity-pulse 3.3s ease-in-out infinite both;
+}
+
+.loading-logo .logo-25 {
+  transform: rotate(-120deg) scale(0.18);
+  animation: opacity-pulse 3.4s ease-in-out infinite both;
+}
+
+.loading-logo .logo-26 {
+  transform: rotate(-125deg) scale(0.17);
+  animation: opacity-pulse 3.5s ease-in-out infinite both;
+}
+
+.loading-logo .logo-27 {
+  transform: rotate(-130deg) scale(0.17);
+  animation: opacity-pulse 3.6s ease-in-out infinite both;
+}
+
+.loading-logo .logo-28 {
+  transform: rotate(-135deg) scale(0.16);
+  animation: opacity-pulse 3.7s ease-in-out infinite both;
+}
+
+.loading-logo .logo-29 {
+  transform: rotate(-140deg) scale(0.16);
+  animation: opacity-pulse 3.8s ease-in-out infinite both;
+}
+
+.loading-logo .logo-30 {
+  transform: rotate(-145deg) scale(0.15);
+  animation: opacity-pulse 3.9s ease-in-out infinite both;
+}
+
 .landing-bg {
   width: 100%; 
   height: 100%; 
@@ -1437,6 +1618,8 @@ canvas#sketchboard {
   text-transform: uppercase;
   animation: blur-in 2.5s ease-in;
   letter-spacing: 10px;
+  margin-bottom: -215px;
+  padding-top: 160px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -1470,6 +1653,7 @@ canvas#sketchboard {
   opacity: 0.8;
   animation: blur-in 2.5s ease-in;
   mix-blend-mode: screen;
+  display: none;
 }
 
 .symphony-logo:hover {
@@ -1498,12 +1682,20 @@ canvas#sketchboard {
 }
 
 .loaded {
-  display: none;
+  /* display: none; */
   opacity: 0.0;
   filter: blur(2ex);
-  /* transition: opacity 10s, filter 10s, visibility 10s; */
+  transition: opacity 5s, filter 5s, visibility 5s;
   visibility: hidden;
   /* animation: zoom-in 10s ease-in; */
+}
+
+.loaded h1 {
+  visibility: hidden;
+}
+
+.loaded .symphony-logo {
+  animation: zoom-out 5s;
 }
 
 @keyframes pulsate {
@@ -1520,7 +1712,7 @@ canvas#sketchboard {
 
 @keyframes opacity-pulse {
   0% {
-    opacity: 0.8;
+    opacity: 0.;
   }
   50% {
     opacity: 0.45;
@@ -1554,6 +1746,15 @@ canvas#sketchboard {
   }
   100% {
     transform: scale(3.0);
+  }
+}
+
+@keyframes zoom-out {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.0);
   }
 }
 
@@ -2298,3 +2499,4 @@ canvas#sketchboard {
     display: none;
   }
 }
+
