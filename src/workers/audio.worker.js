@@ -1,6 +1,6 @@
-import GPU from 'gpu.js'
 import AudioUtils from '../libs/audio/audioUtils'
 import * as ArrayUtils from '../utils/array'
+importScripts('https://cdnjs.cloudflare.com/ajax/libs/gpu.js/1.10.4/gpu.min.js')
 
 self.addEventListener('message', async function (e) {
   let data = e.data
@@ -35,7 +35,7 @@ self.addEventListener('message', async function (e) {
 
       let audioChunkTime = (soundDuration / parts)
 
-      const sineBank = gpu.createKernel(audioUtils.sineBank, {loopMaxIterations: config.audio.maxSineBankLoops}).setOutput([
+      const sineBank = gpu.createKernel(audioUtils.sineBank, { loopMaxIterations: config.audio.maxSineBankLoops }).setOutput([
         Math.floor(
           sampleRate * audioChunkTime
         )

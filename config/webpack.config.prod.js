@@ -261,14 +261,14 @@ module.exports = {
       inject: true,
       template: paths.appHtml,
       minify: {
-        removeComments: false,
-        collapseWhitespace: false,
+        removeComments: true,
+        collapseWhitespace: true,
         removeRedundantAttributes: false,
         useShortDoctype: true,
         removeEmptyAttributes: false,
         removeStyleLinkTypeAttributes: false,
         keepClosingSlash: true,
-        minifyJS: false,
+        minifyJS: true,
         minifyCSS: false,
         minifyURLs: false
       }
@@ -283,9 +283,7 @@ module.exports = {
         // https://github.com/mishoo/UglifyJS2/issues/2011
         comparisons: false
       },
-      mangle: {
-        safari10: true
-      },
+      mangle: true,
       output: {
         comments: false,
         // Turned on because emoji and regex is not minified properly using default
@@ -294,11 +292,15 @@ module.exports = {
       },
       sourceMap: shouldUseSourceMap
     }),
+
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
+
+    new webpack.optimize.DedupePlugin(), // dedupe similar code
+    new webpack.optimize.AggressiveMergingPlugin(),
 
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({

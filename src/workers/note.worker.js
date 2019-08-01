@@ -1,5 +1,5 @@
-import GPU from 'gpu.js'
 import AudioUtils from '../libs/audio/audioUtils'
+importScripts('https://cdnjs.cloudflare.com/ajax/libs/gpu.js/1.10.4/gpu.min.js')
 
 self.addEventListener('message', async function (e) {
   let data = e.data
@@ -24,7 +24,7 @@ self.addEventListener('message', async function (e) {
 
       const gpu = new GPU()
 
-      const txAudio = gpu.createKernel(audioUtils.txAudio, {loopMaxIterations: 1}).setOutput([
+      const txAudio = gpu.createKernel(audioUtils.txAudio, { loopMaxIterations: 1 }).setOutput([
         Math.floor(
           sampleRate * noteDuration
         )

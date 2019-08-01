@@ -1,11 +1,6 @@
-import moment from 'moment'
-
-importScripts('https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js')
-importScripts('https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js')
-importScripts('https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js')
-// import 'firebase/storage'
-
-// import BlockDataHelper from '../helpers/BlockDataHelper'
+importScripts('https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js')
+importScripts('https://www.gstatic.com/firebasejs/6.3.3/firebase-firestore.js')
+importScripts('https://www.gstatic.com/firebasejs/6.3.3/firebase-auth.js')
 
 let config = {}
 
@@ -45,7 +40,7 @@ self.addEventListener('message', async function (e) {
       } else {
         blockData = snapshot.data()
         // check if block was cached more than a week ago
-        if (moment().valueOf() - blockData.cacheTime.toMillis() > 604800000) {
+        if (Date.now() - blockData.cacheTime.toMillis() > 604800000) {
           // console.log('Block: ' + data.hash + ' is out of date, marked for update')
           shouldCache = true
         }
@@ -65,7 +60,7 @@ self.addEventListener('message', async function (e) {
         }
         if (heightsToUpdate.length > 0) {
           try {
-            await docRefUpdate.doc('heights').set({heights: heightsToUpdate}, { merge: false })
+            await docRefUpdate.doc('heights').set({ heights: heightsToUpdate }, { merge: false })
           } catch (error) {
             console.log(error)
           }

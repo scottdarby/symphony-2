@@ -1,10 +1,8 @@
 import * as ArrayUtils from '../utils/array'
 
-import moment from 'moment'
-
-importScripts('https://www.gstatic.com/firebasejs/6.2.4/firebase-app.js')
-importScripts('https://www.gstatic.com/firebasejs/6.2.4/firebase-firestore.js')
-importScripts('https://www.gstatic.com/firebasejs/6.2.4/firebase-auth.js')
+importScripts('https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js')
+importScripts('https://www.gstatic.com/firebasejs/6.3.3/firebase-firestore.js')
+importScripts('https://www.gstatic.com/firebasejs/6.3.3/firebase-auth.js')
 
 let firebaseDB
 let docRef
@@ -85,7 +83,7 @@ self.addEventListener('message', async function (e) {
       await ArrayUtils.asyncForEach(dataArr, async (blockDetails) => {
         // edge struggles with this for some reason
         if (!data.config.detector.isEdge) {
-          if (moment().valueOf() - blockDetails.cacheTime.toMillis() > 604800000) {
+          if (Date.now() - blockDetails.cacheTime.toMillis() > 604800000) {
           // console.log('Block: ' + blockDetails.hash + ' is out of date, marked for update')
             let snapshots = await docRefUpdate.get()
             let heightsToUpdate = []
@@ -98,7 +96,7 @@ self.addEventListener('message', async function (e) {
             }
             if (heightsToUpdate.length > 0) {
               try {
-                await docRefUpdate.doc('heights').set({heights: heightsToUpdate}, { merge: false })
+                await docRefUpdate.doc('heights').set({ heights: heightsToUpdate }, { merge: false })
               } catch (error) {
                 console.log(error)
               }
@@ -118,7 +116,7 @@ self.addEventListener('message', async function (e) {
             }
             if (heightsToUpdate.length > 0) {
               try {
-                await docRefUpdate.doc('heights').set({heights: heightsToUpdate}, { merge: false })
+                await docRefUpdate.doc('heights').set({ heights: heightsToUpdate }, { merge: false })
               } catch (error) {
                 console.log(error)
               }
