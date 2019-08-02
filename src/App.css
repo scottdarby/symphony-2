@@ -1424,8 +1424,8 @@ canvas#sketchboard {
 
 .loading-logo span {
   background: #fff;
-  width: 5px;
-  height: 300px;
+  width: 3px;
+  height: 228px;
   display: block;
   position: absolute;
   transform: scale(0) rotate(-145deg);
@@ -1614,12 +1614,12 @@ canvas#sketchboard {
 
 .loading-container h1 {
   font-weight: 300;
-  font-size: 1vw;
+  font-size: 0.7vw;
   text-transform: uppercase;
   animation: blur-in 2.5s ease-in;
   letter-spacing: 10px;
   margin-bottom: -215px;
-  padding-top: 160px;
+  padding-top: 127px;
 }
 
 @media only screen and (max-width: 600px) {
