@@ -244,6 +244,14 @@ export default class BlockDetails extends Component {
   }
 
   audioMuteControls () {
+    if (!this.props.audioEnabled) {
+      return (
+        <div className='volume-controls disabled'>
+          <i className='fas fa-volume-mute' onClick={this.props.enableAudio} />
+        </div>
+      )
+    }
+
     if (this.props.audioMuted) {
       return (
         <div className='volume-controls'>

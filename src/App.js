@@ -113,7 +113,7 @@ class App extends mixin(EventEmitter, Component) {
     this.isNavigating = false
     this.camEuler = new THREE.Euler(0, 0, 0, 'YXZ')
 
-    this.audioEnabled = true
+    this.audioEnabled = false
     if (this.config.detector.isMobile) {
       this.audioEnabled = false
     }
@@ -192,7 +192,9 @@ class App extends mixin(EventEmitter, Component) {
       showInfoOverlay: false,
       UIClass: 'symphony',
       animatingCamera: true,
-      loadProgress: 0
+      loadProgress: 0,
+      audioMuted: true,
+      audioEnabled: false
     }
 
     this.initFirebase()
@@ -2169,6 +2171,10 @@ class App extends mixin(EventEmitter, Component) {
       underneath = true
     }
 
+    if (this.config.detector.isMobile) {
+      underneath = false
+    }
+
     if (underneath) {
       let toBlockVec1 = new THREE.Vector3(posX, this.autoPilotYPos, posZ).sub(new THREE.Vector3(
         this.blockPositions[(this.closestBlock.blockData.height) * 2 + 0],
@@ -3580,7 +3586,7 @@ class App extends mixin(EventEmitter, Component) {
     this.updateClosestTrees()
 
     if (typeof this.audioManager.buffers[this.closestBlock.blockData.height] === 'undefined') {
-      if (this.audioEnabled) {
+      if (this.audioEnabled && this.state.audioEnabled) {
         this.audioManager.generate(this.closestBlock.blockData, this.closestBlockTXValues, this.closestBlockSpentRatios)
       }
       this.crystalGenerator.updateBlockStartTimes(this.closestBlock.blockData)
@@ -4382,6 +4388,14 @@ class App extends mixin(EventEmitter, Component) {
     this.audioManager.muteMaster()
   }
 
+  enableAudio () {
+    this.setState({
+      audioEnabled: true
+    })
+    this.audioEnabled = true
+    this.unMuteAudio()
+  }
+
   unMuteAudio () {
     this.setState({
       audioMuted: false
@@ -4516,7 +4530,9 @@ class App extends mixin(EventEmitter, Component) {
           playButtonSound={this.playButtonSound.bind(this)}
           muteAudio={this.muteAudio.bind(this)}
           unMuteAudio={this.unMuteAudio.bind(this)}
+          enableAudio={this.enableAudio.bind(this)}
           audioMuted={this.state.audioMuted}
+          audioEnabled={this.state.audioEnabled}
         />
 
       </div>

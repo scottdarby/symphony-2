@@ -1459,7 +1459,6 @@ canvas#sketchboard {
 
 .loading-logo .logo-4 {
   transform: rotate(1deg) scale(0.85);
-  transition: transform 5s;
   animation: opacity-pulse 1.3s ease-in-out infinite both;
 }
 
@@ -1685,7 +1684,7 @@ canvas#sketchboard {
   /* display: none; */
   opacity: 0.0;
   filter: blur(2ex);
-  transition: opacity 8s, filter 8s, visibility 8s;
+  transition: opacity 5s, filter 5s, visibility 5s;
   visibility: hidden;
   /* animation: zoom-in 10s ease-in; */
 }
@@ -2356,10 +2355,15 @@ canvas#sketchboard {
 .volume-controls {
   position: absolute;
   z-index: 2;
-  font-size: 15px;
+  font-size: 18px;
   bottom: -91px;
   opacity: 0.7;
 }
+
+/* .volume-controls.disabled {
+  font-size: 44px;
+  opacity: 0.6;
+} */
 
 .volume-controls i:hover {
   cursor: pointer;
