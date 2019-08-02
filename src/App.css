@@ -606,6 +606,7 @@ canvas#sketchboard {
 
 @media only screen and (max-width: 600px) {
   .block-details-heading {
+    display: none;
     position: absolute;
     width: 100%;
     text-align: center;
@@ -1623,7 +1624,7 @@ canvas#sketchboard {
 
 @media only screen and (max-width: 600px) {
   .loading-container h1 {
-    font-size: 7vw;
+    font-size: 3vw;
   }
 }
 
