@@ -18,12 +18,13 @@ export default class Crystal extends Base {
     this.instanceTotal = 9 * 4000
 
     if (this.config.scene.mode === 'lite') {
-      this.instanceTotal = 5 * 4000
+      this.instanceTotal = 4 * 4000
     }
-    
+
     if (this.config.detector.isMobile) {
       this.instanceTotal = 3 * 4000
     }
+    this.instanceTotal = 10000
 
     this.txCount = 0
     this.txIndexOffsets = {}

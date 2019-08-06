@@ -117,73 +117,76 @@ void main() {
 
 	vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular + reflectedLight.indirectSpecular + totalEmissiveRadiance;
 
-	float noiseAmount = noise(vec4(vOffset.xyz / (vScale * 8.0), uTime * 0.00025)) * 0.1;
+	// float noiseAmount = noise(vec4(vOffset.xyz / (vScale * 8.0), uTime * 0.00025)) * 0.1;
 
-	outgoingLight += noiseAmount * 0.5;
+	// outgoingLight += noiseAmount * 0.5;
 
-	vec2 st = (vec2((vUv.x * vScale * 5.0), vOffset.y) * 0.5);
-	vec2 ipos = floor(st);  // integer
-	vec2 fpos = fract(st);  // fraction
+	// vec2 st = (vec2((vUv.x * vScale * 5.0), vOffset.y) * 0.5);
+	// vec2 ipos = floor(st);  // integer
+	// vec2 fpos = fract(st);  // fraction
 
-	vec2 tile = truchetPattern(fpos, random( ipos ) * uTime * 0.00005);
+	// vec2 tile = truchetPattern(fpos, random( ipos ) * uTime * 0.00005);
 
-	// Maze
-	float tileColor = 0.0;
-	tileColor = smoothstep(tile.x-0.3, tile.x, tile.y)-
-			smoothstep(tile.x, tile.x+0.3, tile.y);
+	// // Maze
+	// float tileColor = 0.0;
+	// tileColor = smoothstep(tile.x-0.3, tile.x, tile.y)-
+	// 		smoothstep(tile.x, tile.x+0.3, tile.y);
 
-	// further smoothing    
-	tileColor -= smoothstep(tile.x+0.3,tile.x,0.0)-
-			smoothstep(tile.x,tile.x-0.3,-0.15);
+	// // further smoothing    
+	// tileColor -= smoothstep(tile.x+0.3,tile.x,0.0)-
+	// 		smoothstep(tile.x,tile.x-0.3,-0.15);
 	
-	tileColor -= smoothstep(tile.y+0.3,tile.y,0.0)-
-			smoothstep(tile.y,tile.y-0.3,-0.15);
+	// tileColor -= smoothstep(tile.y+0.3,tile.y,0.0)-
+	// 		smoothstep(tile.y,tile.y-0.3,-0.15);
 	
-	tileColor -= smoothstep(tile.x+0.3,tile.x,1.15)-
-			smoothstep(tile.x,tile.x-0.3,1.0);
+	// tileColor -= smoothstep(tile.x+0.3,tile.x,1.15)-
+	// 		smoothstep(tile.x,tile.x-0.3,1.0);
 	
-	tileColor -= smoothstep(tile.y+0.3,tile.y,1.15)-
-			smoothstep(tile.y,tile.y-0.3,1.0);
+	// tileColor -= smoothstep(tile.y+0.3,tile.y,1.15)-
+	// 		smoothstep(tile.y,tile.y-0.3,1.0);
 
-	float absNoise = abs(noiseAmount) * 30.0;
+	// float absNoise = abs(noiseAmount) * 30.0;
 	
-	float tileNoiseColor = ((pow(tileColor, 3.0) * 2.0) * absNoise) * (0.1 + (vEnvelope * 3.0));
+	// // float tileNoiseColor = ((pow(tileColor, 3.0) * 2.0) * absNoise) * (0.1 + (vEnvelope * 3.0));
+	// float tileNoiseColor = ((pow(tileColor, 3.0) * 2.0) * absNoise);
 
 
-	outgoingLight.b += (tileNoiseColor * (1.0 - vTopVertex) * (1.0 - vBottomVertex) );
-	outgoingLight.g += (tileNoiseColor * (1.0 - vTopVertex) * (1.0 - vBottomVertex) ) * 0.3;
+	// outgoingLight.b += (tileNoiseColor * (1.0 - vTopVertex) * (1.0 - vBottomVertex) );
+	// outgoingLight.g += (tileNoiseColor * (1.0 - vTopVertex) * (1.0 - vBottomVertex) ) * 0.3;
 
 	outgoingLight += smoothstep(0.7, 1.0, edgeAmount) * 0.05;
-	outgoingLight += (pow(vTopVertex, 5.0) * vEnvelope) * 0.3;
-	outgoingLight += (pow(vBottomVertex, 5.0) * vEnvelope) * 0.3;
+	// outgoingLight += (pow(vTopVertex, 5.0) * vEnvelope) * 0.3;
+	// outgoingLight += (pow(vBottomVertex, 5.0) * vEnvelope) * 0.3;
 
 	outgoingLight += vIsHovered * (edgeAmount * 0.5);
 	outgoingLight += vIsSelected * (edgeAmount * 0.5);
 
-	if (vWorldPosition.y < 0.0) {
-		diffuseColor.a *= 0.8;
-	}
+	// if (vWorldPosition.y < 0.0) {
+	// 	diffuseColor.a *= 0.8;
+	// }
 
 	gl_FragColor = vec4( outgoingLight, diffuseColor.a);
 
 	#include <tonemapping_fragment>
 	#include <encodings_fragment>
 
-	#ifdef USE_FOG
+	#include <fog_fragment>
 
-		#ifdef FOG_EXP2
+	// #ifdef USE_FOG
 
-			float fogFactor = whiteCompliment( exp2( - fogDensity * fogDensity * fogDepth * fogDepth * LOG2 ) );
+	// 	#ifdef FOG_EXP2
 
-		#else
+	// 		float fogFactor = whiteCompliment( exp2( - fogDensity * fogDensity * fogDepth * fogDepth * LOG2 ) );
 
-			float fogFactor = smoothstep( fogNear, fogFar, fogDepth );
+	// 	#else
 
-		#endif
+	// 		float fogFactor = smoothstep( fogNear, fogFar, fogDepth );
 
-		gl_FragColor.a = mix( gl_FragColor.a, 0.0, fogFactor );
+	// 	#endif
 
-	#endif
+	// 	gl_FragColor.a = mix( gl_FragColor.a, 0.0, fogFactor );
+
+	// #endif
 
 	#include <premultiplied_alpha_fragment>
 	#include <dithering_fragment>

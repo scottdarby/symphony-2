@@ -32,6 +32,8 @@ export default class CrystalAO extends Base {
     if (this.config.detector.isMobile) {
       this.instanceTotal = 0
     }
+
+      this.instanceTotal = 10000
   }
 
   async init (blockGeoData) {

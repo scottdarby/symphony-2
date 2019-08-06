@@ -13,8 +13,9 @@ const Config = {
     canvasID: 'symphony-stage', // ID of webgl canvas element
     autoRotate: false, // auto rotate camera around target
     autoRotateSpeed: 0.1, // speed of auto rotation
-    bgColor: 0x121327,
-    fogDensity: 0.00025,
+    bgColor: 0x261e22,
+    // fogDensity: 0.00025,
+    fogDensity: 0.0025,
     particleLifeMin: 100, // min number of frames a particle can live for
     particleLifeMax: detector.isMobile ? 200 : 1000, // max number of frames a particle can live for
     particleEmitterRadius: detector.isMobile ? 50000 : 150000, // size of sphere which emits particles

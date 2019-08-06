@@ -91,7 +91,8 @@ void main() {
 
 	transformed.xz *= scale;
 
-	transformed.y *= max(  ((offset.y + (3.0 * vEnvelope)) * attackLoad) , 0.5 );
+	// transformed.y *= max(  ((offset.y + (3.0 * vEnvelope)) * attackLoad) , 0.5 );
+	transformed.y *= offset.y;
 	transformed.y *= 2.0;
 
 	if (uCamPosYPositive != 1.0 || uIsMobile == 1.0) {
